@@ -11,6 +11,14 @@ const update = async (req, res, next) => {
     }
 
     const { contactId } = req.params;
+    if (contactId.length !== 24) {
+      return res.status(400).json({
+        status: "error",
+        code: 400,
+        message: "ID format is not correct",
+      });
+    }
+
     const updateContactBody = { ...req.body };
     const updatedContact = await services.updateById(
       contactId,
@@ -33,7 +41,7 @@ const update = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(error);
+    return next(error);
   }
 };
 

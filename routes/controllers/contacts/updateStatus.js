@@ -11,6 +11,15 @@ const updateStatus = async (req, res, next) => {
     }
 
     const { contactId } = req.params;
+
+    if (contactId.length !== 24) {
+      return res.status(400).json({
+        status: "error",
+        code: 400,
+        message: "ID format is not correct",
+      });
+    }
+
     const { favorite } = req.body;
 
     if (typeof favorite !== "boolean") {
