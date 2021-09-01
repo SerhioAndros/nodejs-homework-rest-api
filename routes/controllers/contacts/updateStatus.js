@@ -1,18 +1,31 @@
 const { contacts: services } = require("../../../services");
 
-const update = async (req, res, next) => {
+const updateStatus = async (req, res, next) => {
   try {
-    if (Object.keys(req.body).length === 0) {
+    if (!Object.keys(req.body).find((item) => item === "favorite")) {
       return res.status(400).json({
         status: "error",
         code: 400,
-        message: "Missing fields",
+        message: "Missing field 'favorite'",
       });
     }
 
     const { contactId } = req.params;
-    const updateContactBody = { ...req.body };
-    const updatedContact = await services.updateById(
+    const { favorite } = req.body;
+
+    if (typeof favorite !== "boolean") {
+      return res.status(400).json({
+        status: "error",
+        code: 400,
+        message: "Field 'favorite' is not correct",
+      });
+    }
+
+    const updateContactBody = {
+      favorite,
+    };
+
+    const updatedContact = await services.updateStatusContact(
       contactId,
       updateContactBody
     );
@@ -25,9 +38,9 @@ const update = async (req, res, next) => {
       });
     }
 
-    res.status(201).json({
+    res.json({
       status: "success",
-      code: 201,
+      code: 200,
       data: {
         result: updatedContact,
       },
@@ -37,4 +50,4 @@ const update = async (req, res, next) => {
   }
 };
 
-module.exports = update;
+module.exports = updateStatus;

@@ -1,6 +1,6 @@
-const { addContact } = require("../../../model");
+const { contacts: services } = require("../../../services");
 
-const add = async (req, res) => {
+const add = async (req, res, next) => {
   try {
     if (!Object.keys(req.body).includes("name")) {
       return res.status(404).json({
@@ -26,9 +26,8 @@ const add = async (req, res) => {
       });
     }
 
-    const newProduct = { ...req.body };
-
-    const addedContact = await addContact(newProduct);
+    const newContact = { ...req.body };
+    const addedContact = await services.add(newContact);
 
     res.status(201).json({
       status: "success",
@@ -38,7 +37,7 @@ const add = async (req, res) => {
       },
     });
   } catch (err) {
-    throw err;
+    next(err);
   }
 };
 
