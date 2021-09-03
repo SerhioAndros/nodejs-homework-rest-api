@@ -1,10 +1,18 @@
-const { getContactById } = require("../../../model");
+const { contacts: services } = require("../../../services");
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
   try {
     const { contactId } = req.params;
 
-    const contact = await getContactById(contactId);
+    const contact = await services.getById(contactId);
+
+    if (!contact) {
+      return res.status(404).json({
+        status: "success",
+        code: 404,
+        message: `Contact with ID = "${contactId}" not found`,
+      });
+    }
 
     res.json({
       status: "success",
@@ -14,11 +22,7 @@ const getById = async (req, res) => {
       },
     });
   } catch (err) {
-    return res.status(404).json({
-      status: "error",
-      code: 404,
-      message: "Contact not found",
-    });
+    next(err);
   }
 };
 
