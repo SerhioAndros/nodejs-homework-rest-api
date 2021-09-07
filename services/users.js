@@ -20,9 +20,21 @@ const update = (id, data) => {
   return User.findByIdAndUpdate(id, data);
 };
 
+const updateUserSubscription = async (id, data) => {
+  try {
+    console.log("ID", id);
+    console.log("DATA", data);
+    await User.findByIdAndUpdate(id, data);
+    return User.findById(id, "_id email subscription");
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getOne,
   getById,
   add,
   update,
+  updateUserSubscription,
 };

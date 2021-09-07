@@ -12,32 +12,6 @@ const getAll = (pagination, filter) => {
 
 const getById = (id, filter) => {
   return Contact.find({ _id: id, owner: filter });
-  // return Contact.findById(id, "_id name email phone owner favorite");
-
-  // try {
-  //   const userContacts = await Contact.find(
-  //     filter,
-  //     "_id name email phone favorite"
-  //   );
-  //   const result = userContacts.find((contact) => {
-  //     console.log("contact ID", typeof toSting(contact._id));
-  //     console.log("query ID", typeof id);
-  //     if (contact._id === id) {
-  //       return contact;
-  //     }
-  //     return;
-  //   });
-  //   return result;
-  // } catch (error) {
-  //   throw error;
-  // }
-
-  // const userContacts = Contact.find(filter, "_id name email phone favorite");
-  // const result = userContacts.find((contact) => {
-  //   console.log(contact);
-  //   return contact._id === id;
-  // });
-  // return result;
 };
 
 const add = (newContact) => {
