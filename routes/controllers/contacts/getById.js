@@ -4,9 +4,10 @@ const getById = async (req, res, next) => {
   try {
     const { contactId } = req.params;
 
-    const contact = await services.getById(contactId);
+    const filter = req.user._id;
 
-    if (!contact) {
+    const contact = await services.getById(contactId, filter);
+    if (contact.length !== 1) {
       return res.status(404).json({
         status: "success",
         code: 404,

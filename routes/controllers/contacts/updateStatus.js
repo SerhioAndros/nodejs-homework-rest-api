@@ -34,6 +34,17 @@ const updateStatus = async (req, res, next) => {
       favorite,
     };
 
+    const filter = req.user._id;
+
+    const contact = await services.getById(contactId, filter);
+    if (contact.length !== 1) {
+      return res.status(404).json({
+        status: "success",
+        code: 404,
+        message: `Contact with ID = "${contactId}" not found`,
+      });
+    }
+
     const updatedContact = await services.updateStatusContact(
       contactId,
       updateContactBody

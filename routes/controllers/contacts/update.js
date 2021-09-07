@@ -19,19 +19,22 @@ const update = async (req, res, next) => {
       });
     }
 
-    const updateContactBody = { ...req.body };
-    const updatedContact = await services.updateById(
-      contactId,
-      updateContactBody
-    );
+    const filter = req.user._id;
 
-    if (!updatedContact) {
+    const contact = await services.getById(contactId, filter);
+    if (contact.length !== 1) {
       return res.status(404).json({
         status: "success",
         code: 404,
         message: `Contact with ID = "${contactId}" not found`,
       });
     }
+
+    const updateContactBody = { ...req.body };
+    const updatedContact = await services.updateById(
+      contactId,
+      updateContactBody
+    );
 
     res.status(201).json({
       status: "success",

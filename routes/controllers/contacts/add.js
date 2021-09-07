@@ -26,7 +26,7 @@ const add = async (req, res, next) => {
       });
     }
 
-    const newContact = { ...req.body };
+    const newContact = { ...req.body, owner: req.user._id };
     const addedContact = await services.add(newContact);
 
     res.status(201).json({
