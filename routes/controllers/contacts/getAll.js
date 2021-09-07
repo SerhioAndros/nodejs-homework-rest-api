@@ -1,8 +1,10 @@
 const { contacts: services } = require("../../../services");
 
-const getAll = async (_, res, next) => {
+const getAll = async (req, res, next) => {
   try {
-    const contacts = await services.getAll();
+    const { limit = 10, page = 1 } = req.query;
+    const filter = { owner: req.user._id };
+    const contacts = await services.getAll({ page, limit }, filter);
     res.json({
       status: "success",
       code: 200,
