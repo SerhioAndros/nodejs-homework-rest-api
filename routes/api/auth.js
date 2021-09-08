@@ -2,8 +2,13 @@ const express = require("express");
 
 const { auth: ctrl } = require("../controllers");
 
-const { validation, authenticate } = require("../middlewares");
+const { validation, authenticate, imgUpload } = require("../middlewares");
 const { userJoiSchema } = require("../../model/schema");
+
+//
+// const tmpDir = require("../middlewares/tmpImgSave");
+// console.log(tmpDir);
+//
 
 const router = express.Router();
 
@@ -16,5 +21,12 @@ router.post("/logout", authenticate, ctrl.logout);
 router.get("/current", authenticate, ctrl.current);
 
 router.patch("/", authenticate, ctrl.updateSubscription);
+
+router.patch(
+  "/avatars",
+  authenticate,
+  imgUpload.single("avatar"),
+  ctrl.updateAvatar
+);
 
 module.exports = router;
