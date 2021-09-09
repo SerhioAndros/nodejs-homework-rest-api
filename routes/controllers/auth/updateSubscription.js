@@ -12,19 +12,7 @@ const updateSubscription = async (req, res, next) => {
 
     const userId = req.user._id;
 
-    console.log("check", userId);
-
-    // if (userId.length !== 24) {
-    //   return res.status(400).json({
-    //     status: "error",
-    //     code: 400,
-    //     message: "ID format is not correct",
-    //   });
-    // }
-
     const { subscription } = req.body;
-
-    console.log(subscription === "pro");
 
     if (
       subscription !== "starter" &&
@@ -41,17 +29,6 @@ const updateSubscription = async (req, res, next) => {
     const updateUserBody = {
       subscription,
     };
-
-    // const filter = req.user._id;
-
-    // const contact = await services.getById(contactId, filter);
-    // if (contact.length !== 1) {
-    //   return res.status(404).json({
-    //     status: "success",
-    //     code: 404,
-    //     message: `Contact with ID = "${contactId}" not found`,
-    //   });
-    // }
 
     const updatedUser = await services.updateUserSubscription(
       userId,

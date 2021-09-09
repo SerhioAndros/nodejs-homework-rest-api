@@ -1,4 +1,6 @@
+const { v4: uuidv4 } = require("uuid");
 const { users: services } = require("../../../services");
+const mailSender = require("../../../utils");
 
 const signup = async (req, res, next) => {
   try {
@@ -11,9 +13,16 @@ const signup = async (req, res, next) => {
         message: "Email in use",
       });
     }
-
-    const createdUser = await services.add(req.body);
-    console.log(createdUser);
+    const verifyToken = uuidv4();
+    const newUser = { ...req.body, verifyToken };
+    const createdUser = await services.add(newUser);
+    const { URL } = process.env;
+    const mail = {
+      to: newUser.email,
+      subject: "Email verification",
+      html: `<a href="${URL}/verify/${verifyToken}" trget="_blank">Confirm your email</a>`,
+    };
+    await mailSender(mail);
 
     res.status(201).json({
       status: "success",
