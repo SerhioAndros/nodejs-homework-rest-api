@@ -16,7 +16,7 @@ const authenticate = async (req, res, next) => {
     }
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await services.getById(id);
-    if (!user || !user.token) {
+    if (!user || !user.verify || !user.token) {
       return res.status(401).json({
         status: "error",
         code: 401,

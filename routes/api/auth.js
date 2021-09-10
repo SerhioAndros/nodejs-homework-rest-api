@@ -20,6 +20,10 @@ router.post("/logout", authenticate, ctrl.logout);
 
 router.get("/current", authenticate, ctrl.current);
 
+router.get("/verify/:verificationToken", ctrl.updateVerification);
+
+router.post("/verify", ctrl.resendVerification);
+
 router.patch("/", authenticate, ctrl.updateSubscription);
 
 router.patch(
