@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const gravatar = require("gravatar");
 const { users: services } = require("../../../services");
-const mailSender = require("../../../utils");
+const { mailSender } = require("../../../utils");
 
 const signup = async (req, res, next) => {
   try {
