@@ -12,18 +12,18 @@ const add = ({ password, ...rest }) => {
   const newUser = new User(rest);
   newUser.setPassword(password);
   newUser.save();
-  const { email, subscription } = newUser;
-  return { email, subscription };
+  const { email, subscription, avatarURL } = newUser;
+  return { email, subscription, avatarURL };
 };
 
 const update = (id, data) => {
   return User.findByIdAndUpdate(id, data);
 };
 
-const updateUserSubscription = async (id, data) => {
+const updateUserData = async (id, data) => {
   try {
     await User.findByIdAndUpdate(id, data);
-    return User.findById(id, "_id email subscription");
+    return User.findById(id, "_id email subscription avatarURL");
   } catch (error) {
     throw error;
   }
@@ -34,5 +34,6 @@ module.exports = {
   getById,
   add,
   update,
-  updateUserSubscription,
+  // updateUserSubscription,
+  updateUserData,
 };

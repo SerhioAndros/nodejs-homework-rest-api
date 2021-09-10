@@ -17,6 +17,9 @@ const userSchema = Schema({
     unique: true,
     match: emailRegExp,
   },
+  avatarURL: {
+    type: String,
+  },
   subscription: {
     type: String,
     enum: ["starter", "pro", "business"],
@@ -49,6 +52,7 @@ const userJoiSchema = Joi.object({
   password: Joi.string().min(5).required(),
   subscription: Joi.string().default("starter"),
   token: Joi.string(),
+  avatarURL: Joi.string(),
 });
 
 module.exports = {

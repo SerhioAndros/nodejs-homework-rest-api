@@ -30,10 +30,7 @@ const updateSubscription = async (req, res, next) => {
       subscription,
     };
 
-    const updatedUser = await services.updateUserSubscription(
-      userId,
-      updateUserBody
-    );
+    const updatedUser = await services.updateUserData(userId, updateUserBody);
 
     if (!updatedUser) {
       return res.status(404).json({
